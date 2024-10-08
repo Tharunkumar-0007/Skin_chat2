@@ -31,14 +31,40 @@ model = load_model('D:/combine/union/image_classifier_model.h5')
 
 # Define class labels for image classification
 class_labels = {
-    0: "Acne", 1: "Eczema", 2: "Psoriasis", 3: "Melanoma",
-    4: "Basal Cell Carcinoma", 5: "Squamous Cell Carcinoma",
-    6: "Fungal Infections", 7: "Impetigo", 8: "Dermatitis",
-    9: "Urticaria", 10: "Tinea", 11: "Vitiligo", 12: "Actinic Keratosis",
-    13: "Folliculitis", 14: "Hives", 15: "Cellulitis", 16: "Lichen Planus",
-    17: "Contact Dermatitis", 18: "Seborrheic Dermatitis", 19: "Rosacea",
-    20: "Atopic Dermatitis", 21: "Warts, Molluscum, and some other viral infections",
-    22: "Melanocytic Nevus", 23: "Benign Keratosis", 24: "Lichen", 25: "AIDS"
+    0: "Acne", 1: "Lichen", 2: "Psoriasis", 3: "Melanoma", 4: "Basal Cell Carcinoma",
+    5: "Squamous Cell Carcinoma", 6: "Fungal Infections", 7: "Impetigo", 8: "Dermatitis", 9: "Urticaria",
+    10: "Tinea", 11: "Vitiligo", 12: "Actinic Keratosis", 13: "Folliculitis", 14: "Hives",
+    15: "Cellulitis", 16: "Lichen Planus", 17: "Contact Dermatitis", 18: "Seborrheic Dermatitis", 19: "Rosacea",
+    20: "Atopic Dermatitis", 21: "Warts", 22: "Melanocytic Nevus", 23: "Benign Keratosis", 24: "Eczema",
+    25: "AIDS", 26: "Reiter Syndrome", 27: "Pityriasis rosea", 28: "Seborrheic Keratosis", 29: "Benign Tumours",
+    30: "Chondro dermatitis", 31: "Cylindroma", 32: "Dermatofibroma", 33: "Epidermal-cyst", 34: "Keloids",
+    35: "Kerato acantho", 36: "Neuro fibroma", 37: "Nevus-sebaceo", 38: "Pilar-cyst", 39: "Poro keratosis",
+    40: "Skin-tags-polyps", 41: "Syringoma", 42: "Sebaceous hyperplasia", 43: "Tinea Ringworm", 44: "Perleche",
+    45: "Herpes", 46: "Molluscum", 47: "Hidradentitis", 48: "Milia", 49: "Perioral Dermatitis",
+    50: "Sebaceous gland", 51: "Hyperhidrosis", 52: "Rhinophyma", 53: "Actinic-cheilitis", 54: "Bowens disease",
+    55: "Cutaneous horn", 56: "CTCL", 57: "Granulation Tissue", 58: "Leukoplakia", 59: "Lymphomatoid",
+    60: "Metastasis", 61: "Verrucous Carcinoma", 62: "Ichthyosis", 63: "Bullous-perphigoid", 64: "Benign familial chronic pemphigus",
+    65: "Darier's Disease", 66: "Grover's disease", 67: "Diabetic Bullae", 68: "Epidermolysis bullosa", 69: "Dermatitis herpetiformis",
+    70: "Leprosy", 71: "Sycosis Barbae", 72: "Fissure", 73: "Staphylococcal", 74: "Pseudomonas folliculitis",
+    75: "Stasis dermatitis", 76: "Neurotic excoriation", 77: "Lichen simplex chronicus", 78: "Dyshidrosis", 79: "Desquamation",
+    80: "Chapped-fissured-feet", 81: "Viral-exanthems", 82: "Scarlet-fever", 83: "Minocycline-pigmentation", 84: "Fixed-drug-eruption",
+    85: "Erythema-infectiosum", 86: "Enterovirus", 87: "Drug-eruptions", 88: "Acne-keloidalis", 89: "Alopecia-areata",
+    90: "Folliculitis-decalvans", 91: "Hot-comb-alopecia", 92: "Pseudopelade", 93: "Trichotillomania", 94: "Eruptive-folliculitis",
+    95: "Genital-warts", 96: "Syphilis", 97: "Sun-damaged", 98: "Pseudo-porphyria", 99: "Sunburn",
+    100: "Porphyria", 101: "Phototoxic-reactions", 102: "Polymorphous-light-eruption", 103: "Lupus", 104: "Acrocyanosis",
+    105: "Chilblains-perniosis", 106: "Dermatomyositis", 107: "Morphea", 108: "Scleroderma", 109: "Atypical-nevi",
+    110: "Blue-nevus", 111: "Congenital-nevus", 112: "Lentigo-maligna", 113: "Malignant-melanoma", 114: "Nevus-veg-pigment",
+    115: "Nevus-spilus", 116: "Alopecia areata", 117: "Chronic paronychia", 118: "Distal subungual onychomycosis", 119: "Habit-tic deformity",
+    120: "Ingrown nail", 121: "Koilonychia", 122: "Nail fungus", 123: "Allergic contact dermatitis", 124: "Cosmetic fragrance allergy",
+    125: "Irritant contact dermatitis", 126: "Metal dermatitis", 127: "Rhus dermatitis", 128: "Shoe allergy", 129: "Lichen sclerosus",
+    130: "Lichen striatus", 131: "Biting infection", 132: "Biting insects", 133: "Acute paronychia", 134: "Duck itch",
+    135: "Lyme disease", 136: "Leishmaniasis", 137: "Pubic lice", 138: "Scabies", 139: "Tick bite",
+    140: "Trichodysplasia spinulosa", 141: "Seborrheic keratoses", 142: "Angioedema", 143: "Cholinergic urticaria", 144: "PUPPP",
+    145: "Urticaria vasculitis", 146: "Angiokeratoma", 147: "Hemangioma", 148: "Pyogenic granuloma", 149: "Telangiectasia",
+    150: "Venous malformations", 151: "Atrophie blanche", 152: "Erythema multiforme", 153: "Henoch-Schonlein purpura", 154: "Schamberg's disease",
+    155: "Vasculitis", 156: "Smallpox", 157: "Varicella", 158: "Warts (common)", 159: "Chickenpox",
+    160: "Balanitis", 161: "Candidal vulvitis", 162: "Intertrigo penis"
+
 }
 
 # Global variables for the QA chain and other components
