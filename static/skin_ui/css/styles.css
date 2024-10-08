@@ -56,12 +56,12 @@ button:hover {
 }
 
 .error {
-    color: #FF4C4C; /* Red color for error messages */
+    color: #e90505; /* Red color for error messages */
 }
 
 .result {
     line-height: 3;
-    color: #c24e31; /* Green color for result messages */
+    color: #e90505; /* Green color for result messages */
 }
 
 video {

@@ -82,8 +82,19 @@ nav {
 }
 
 .book-btn {
-    background-color: #1F326A;
-    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #1F326A; /* Original background color */
+    color: white; /* Original text color */
+    transition: background-color 0.3s ease; /* Smooth transition for color change */
+}
+
+.book-btn:hover {
+    background-color: #a9abae; /* New background color on hover */
+    color: #1F326A; /* New text color on hover */
 }
 
 .hero-image img {

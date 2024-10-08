@@ -61,7 +61,7 @@ def load_llm():
     llm = CTransformers(
         model="TheBloke/llama-2-7b-chat-GGML",
         model_type="llama",
-        max_new_tokens=128,
+        max_new_tokens=256,
         temperature=0.7,
         n_gpu_layers=8,
         n_threads=24,
@@ -125,11 +125,6 @@ def initialize_qa_bot():
     except Exception as e:
         print(f"Error creating QA chain: {e}")
         return None
-
-
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory('static', filename)
 
 @app.route('/')
 def index():

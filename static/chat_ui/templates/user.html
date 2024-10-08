@@ -118,8 +118,11 @@
         if (text) {
             document.getElementById('query').value = text; // Set input box value
             // sendMessage(); // Automatically send the message
+            setTimeout(() => {
+                const event = new Event('submit', { bubbles: true });
+                document.getElementById('query-form').dispatchEvent(event);
+            }, 1000);
         }
-        
     </script>
 </body>
 
