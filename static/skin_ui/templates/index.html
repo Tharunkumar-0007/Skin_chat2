@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../images/app_icon.ico">
+    <title>Skin Diseases Detection</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>SKIN DISEASES DETECTION</h1>
+    </header>
+
+    <div class="container">
+        <h1>Image Classification</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit">Upload Image</button>
+        </form>
+
+        <h2>Or Use Camera</h2>
+        <button id="activate-camera-btn">Activate Camera</button>
+        <video id="camera" autoplay></video>
+        <button id="capture-btn" class="centered">Capture Image</button>
+        <canvas id="canvas"></canvas>
+
+        <div class="error" id="error-message"></div>
+        <div class="result" id="result-message"></div>
+        <a href="#" id="one" onclick="change()" style="display: none;">Details</a>
+
+    </div>
+
+    <footer class="footer">
+        <img src="../images/holologo.png" alt="holoware">
+        <p>*Consult a doctor for a second opinion as this output is not always accurate.</p>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

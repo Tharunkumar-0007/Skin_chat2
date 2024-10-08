@@ -1,0 +1,105 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('../images/sethoscope.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    overflow-x: hidden; /* Only hide horizontal scroll if needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.header {
+    padding: 20px;
+    position: fixed; /* Fixed position */
+    top: 0; 
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure the header stays on top */
+}
+
+.container {
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 105px auto; /* Center the container and add margin to accommodate fixed header */
+}
+
+h1 {
+    color: #fcf9ff; /* Bright yellow color */
+}
+
+form {
+    margin: 20px 0;
+}
+
+input[type="file"], #camera {
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.8); /* Light background for inputs */
+}
+
+button {
+    padding: 6px;
+    background-color: #492b73ab;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transition effect */
+}
+
+button:hover {
+    background-color: #9f73c3;
+}
+
+.error {
+    color: #FF4C4C; /* Red color for error messages */
+}
+
+.result {
+    line-height: 3;
+    color: #c24e31; /* Green color for result messages */
+}
+
+video {
+    width: 480px;
+    height: auto;
+    display: none;
+    margin: 0 auto;
+}
+
+canvas {
+    display: none;
+}
+
+#capture-btn {
+    display: none;
+    margin-top: 10px;
+}
+
+#capture-btn.centered {
+    display: block;
+    margin: 10px auto;
+}
+
+.footer {
+    margin-top: 20px;
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    top:40px;
+    z-index: 1000; /* Ensure the footer stays on top */
+}
+
+.footer img {
+    max-width: 150px; /* Set a max width for the image */
+}
+
+.footer p {
+    margin-top: 10px;
+    font-size: 0.9em; /* Adjust the font size */
+}

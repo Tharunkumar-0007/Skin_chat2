@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/images/fevicon.png">
+    <title>Holoware Medical Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <img src="../static/images/Blue-Logo-new.png" alt="Holoware Logo" height="80px">
+        <h1>Medical Chat Bot</h1>
+        <p>The medical bot can assist in resolving your medical question</p>
+    </header>
+
+    <div class="chat-container">
+        <!-- Background Image -->
+        <div class="background-image">
+            <img src="../static/images/robot-removebg-preview.png" alt="Robot Image">
+        </div>
+
+        <div class="chat-box">
+            <div class="chat-box-header">
+                <img src="../static/images/holoware logo.png" alt="Medical Chat Avatar" class="user-avatar">
+                <h2>Medical Chat</h2>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <!-- Chat messages will appear here -->
+                <!-- <div id="loading-container" class="loading-container">
+                    <div id="loading-indicator" class="loading-indicator">Medical Bot is typing<span id="dots">...</span></div>
+                </div> -->
+            </div>
+            <!-- Loading Indicator Container -->
+            <div id="loading-container" class="loading-container">
+                <div id="loading-indicator" class="loading-indicator">Medical Bot is typing<span id="dots">...</span></div>
+            </div>
+            <form id="query-form" class="chat-input">
+                <input type="text" name="query" id="query" placeholder="Type a message..." required>
+                <button type="button" id="voice-input">🎤</button>
+                <button type="submit" id="submitbtn">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; Powered by Holoware</p>
+        <p>*Due to the inaccuracy of this response, you can also consult the doctor.</p>
+    </footer>
+    <script src="../static/js/script.js"></script>
+    <script>
+        document.getElementById('query-form').addEventListener('submit', (event) => {
+            event.preventDefault();  // Prevent form from reloading the page
+            const userInput = document.getElementById('query').value;
+
+            // Append the user's message to the chat
+            appendMessage('You', userInput);
+
+            // Show loading indicator
+            document.getElementById('loading-container').style.display = 'block';
+
+            // Send the user's input to the backend via a POST request
+            fetch('http://127.0.0.1:5000/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',  // Adjust content type for form data
+                },
+                body: new URLSearchParams({
+                    'query': userInput  // Send user input as 'query'
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();  // Parse the response as JSON
+            })
+            .then(data => {
+                // Append the chatbot's response to the chat
+                appendMessage('Medical Bot', data.response);
+                document.getElementById('query').value = '';  // Clear the input field
+
+                // Hide loading indicator
+                document.getElementById('loading-container').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                appendMessage('Error', 'An error occurred: ' + error.message);
+
+                // Hide loading indicator
+                document.getElementById('loading-container').style.display = 'none';
+            });
+        });
+
+        function appendMessage(sender, message) {
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Only append messages from the bot
+            if (sender === 'Medical Bot') {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('chat-message');
+                messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+                chatMessages.appendChild(messageDiv);
+        
+                // Scroll to the bottom to show the latest message
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        // Get the text from the query parameter and update the chat content
+        var text = getQueryParam('text');
+        if (text) {
+            document.getElementById('query').value = text; // Set input box value
+            // sendMessage(); // Automatically send the message
+        }
+        
+    </script>
+</body>
+
+</html>
