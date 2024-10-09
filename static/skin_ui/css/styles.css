@@ -31,9 +31,9 @@ h1 {
     color: #fcf9ff; /* Bright yellow color */
 }
 
-form {
+/* form {
     margin: 20px 0;
-}
+} */
 
 input[type="file"], #camera {
     border-radius: 5px;
@@ -85,21 +85,24 @@ canvas {
     margin: 10px auto;
 }
 
-.footer {
+/* .footer {
     margin-top: 20px;
     padding: 10px 0;
     text-align: center;
     position: relative;
     width: 100%;
     top:40px;
-    z-index: 1000; /* Ensure the footer stays on top */
+    z-index: 1000; 
 }
-
 .footer img {
-    max-width: 150px; /* Set a max width for the image */
+    max-width: 150px; 
 }
 
 .footer p {
     margin-top: 10px;
-    font-size: 0.9em; /* Adjust the font size */
+    font-size: 0.9em; 
+} */
+
+.footer img{
+    width: 150px;
 }

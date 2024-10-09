@@ -108,12 +108,26 @@ document.getElementById('upload-form').addEventListener('submit', function(event
 
 // Handle "Details" link click
 function change() {
+
     if (predictedDisease) {
-        // Construct the explanation text with the predicted disease name
-        var s = "explain about " + predictedDisease; 
-        // Redirect to the chat page with the explanation text as a query parameter
-        window.location.href = "D:/combine/union/static/chat_ui/templates/user.html?text=" + encodeURIComponent(s);
+        const s = "explain about " + predictedDisease;
+
+        // Open the chat box if not already open
+        const chatBox = document.querySelector('.chat-box');
+        if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+            toggleChat();  // Open the chat box
+        }
+
+        // Instead of navigating, update the chat input with the explanation
+        document.getElementById('query').value = s;
+
+        // Auto-submit the form with the explanation
+        setTimeout(() => {
+            const event = new Event('submit', { bubbles: true });
+            document.getElementById('query-form').dispatchEvent(event);
+        }, 500);
     } else {
         document.getElementById('error-message').textContent = 'No predicted disease to show details.';
     }
 }
+
