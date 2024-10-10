@@ -28,7 +28,8 @@ db = SQLAlchemy(app)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-model = load_model('image_classifier_model.h5')
+model_path = r'D:/project/union/image_classifier_model.h5'
+model = load_model(model_path)
 
 # Define class labels for image classification
 class_labels = {
