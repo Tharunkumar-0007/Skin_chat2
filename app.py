@@ -9,6 +9,7 @@ import re
 import torch
 from langchain.prompts import PromptTemplate
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.llms import CTransformers
 from langchain.chains import RetrievalQA
@@ -27,7 +28,7 @@ db = SQLAlchemy(app)
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-model = load_model('D:/combine/union/image_classifier_model.h5')
+model = load_model('image_classifier_model.h5')
 
 # Define class labels for image classification
 class_labels = {
@@ -124,7 +125,7 @@ def initialize_qa_bot():
 
     try:
         print("Loading FAISS database...")
-        faiss_path = os.getenv('FAISS_DB_PATH', 'D:/combine/union/vectorstores/db_faiss')
+        faiss_path = os.getenv('FAISS_DB_PATH', 'vectorstores/db_faiss')
         db = FAISS.load_local(faiss_path, embeddings, allow_dangerous_deserialization=True)
         print("FAISS database loaded successfully.")
     except FileNotFoundError:

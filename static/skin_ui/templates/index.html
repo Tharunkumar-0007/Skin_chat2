@@ -73,6 +73,7 @@
 
     <!-- Chat Toggle Script -->
     <script>
+        
         function toggleChat() {
             const chatBox = document.querySelector('.chat-box');
             if (chatBox.style.display === 'none' || chatBox.style.display === '') {
@@ -116,6 +117,8 @@
                 appendMessage('Medical Bot', data.response);
                 document.getElementById('query').value = '';
                 document.getElementById('loading-container').style.display = 'none';
+                document.getElementById('result-message').style.display = 'inline-block';
+                document.getElementById('error-message').style.display = 'inline-block';
             })
             .catch(error => {
                 appendMessage('Error', 'An error occurred: ' + error.message);

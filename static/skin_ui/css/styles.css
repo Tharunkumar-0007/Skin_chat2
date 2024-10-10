@@ -85,6 +85,30 @@ canvas {
     margin: 10px auto;
 }
 
+.result {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px; /* Start with padding 0 */
+    border-radius: 10px;
+    background-color: #67239e; 
+    font-weight: bold;
+    color: #ffffff; 
+    display: inline-block;
+    transition: padding 0.3s ease; /* Add transition for smooth effect */
+}
+
+.error {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px; 
+    border-radius: 10px;
+    background-color: #67239e; 
+    font-weight: bold;
+    color: #ffffff; 
+    display: none;
+}
+
+
 /* .footer {
     margin-top: 20px;
     padding: 10px 0;
