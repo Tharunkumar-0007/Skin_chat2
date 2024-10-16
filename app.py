@@ -8,6 +8,7 @@ import numpy as np
 import re
 import torch
 from langchain.prompts import PromptTemplate
+from transformers import pipeline
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -30,7 +31,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 model_path = r'D:/project/union/image_classifier_model.h5'
 model = load_model(model_path)
-
 # Define class labels for image classification
 class_labels = {
     0: "Acne", 1: "Lichen", 2: "Psoriasis", 3: "Melanoma", 4: "Basal Cell Carcinoma",
@@ -89,10 +89,10 @@ def load_llm():
     llm = CTransformers(
         model="TheBloke/llama-2-7b-chat-GGML",
         model_type="llama",
-        max_new_tokens=256,
-        temperature=0.7,
+        max_new_tokens=128, 
+        temperature=0.7,  
         n_gpu_layers=8,
-        n_threads=24,
+        n_threads=24,  
         n_batch=1000,
         load_in_8bit=True,
         num_beams=1,
@@ -137,6 +137,7 @@ def initialize_qa_bot():
         return None
 
     try:
+        
         print("Loading LLM...")
         llm = load_llm()
         print("LLM loaded successfully.")
@@ -158,23 +159,47 @@ def initialize_qa_bot():
 def index():
     return render_template('index.html')  # Ensure index.html exists in the 'templates' folder
 
+classifier = pipeline('zero-shot-classification', model='facebook/bart-large-mnli')
+
+
+def is_medical_query(query):
+    """Use a classifier to determine if the question is medical-related."""
+    labels = ['medical', 'non-medical']
+    result = classifier(query, labels)
+    return result['labels'][0] == 'medical'
+
 @app.route('/ask', methods=['POST'])
 def ask_question():
     global question_count
     user_input = request.form['query']
-    
+    username = request.form.get('username')  # Assuming you pass the username in the form data
+   
     if not is_valid_query(user_input):
+        if username:
+            app.logger.info(f'Question asked by {username}: {user_input}')
         return jsonify({"response": "Nothing matched. Please enter a valid query."})
-    
+   
+    # Check if the query is medical-related
+    if not is_medical_query(user_input):
+        app.logger.info(f'Non-medical question by {username}: {user_input}')
+        return jsonify({"response": "Not medical-related"})
+   
     if qa_chain is None:
+        if username:
+            app.logger.info(f'Question asked by {username}: {user_input}')
         return jsonify({"response": "Failed to initialize QA bot."})
-    
+   
     try:
-        res = qa_chain.invoke({'query': user_input})
+        res = qa_chain({'query': user_input})
         answer = res.get("result", "No answer found.")
         question_count += 1
+        app.logger.info(f'Question count: {question_count}')
+        if username:
+            app.logger.info(f'Question asked by {username}: {user_input}')
         return jsonify({"response": answer})
     except Exception as e:
+        if username:
+            app.logger.error(f'Error processing the query by {username}: "{user_input}" - Error: {e}')
         return jsonify({"response": f"Error processing the query: {e}"})
 
 @app.route('/predict', methods=['POST'])
@@ -225,5 +250,5 @@ def is_valid_query(query):
 
 if __name__ == '__main__':
     initialize_qa_bot()  # Initialize the QA bot when the app starts
-    app.run(host='0.0.0.0', debug=True, port=5000)  #app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5000)  
 
